@@ -3,31 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:55:51 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/11 16:10:20 by antoine          ###   ########.fr       */
+/*   Updated: 2023/11/13 11:31:57 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_read(char *buffer)
+static char	*ft_read(char *prev_line)
 {
 	int		i;
-	int		j;
 	char	*line;
 
-	i = 0;
-	while (buffer[i] != '\0' && buffer[i] != '\n')
-		i++;
-	if (!buffer[i])
+	i = 1;
+	if (!prev_line)
+	{
+		free(prev_line);
 		return (NULL);
-	line = malloc((BUFFER_SIZE - i + 1) * sizeof(char));
-	i++;
-	j = 0;
-	while (buffer[i])
-		line[j++] = buffer[i++];
+	}
+	while (prev_line[i] != '\0' && prev_line[i - 1] != '\n')
+		i++;
+	line = malloc((i + 1) * sizeof(char));
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (prev_line[i] != '\0' && prev_line[i] != '\n')
+	{
+		line[i] = prev_line[i];
+		i++;
+	}
+	if (prev_line[i] == '\n')
+		line[i] = '\n';
+	i = i + 1;
+	line[i] = '\0';
+	free(prev_line);
 	return (line);
 }
 
@@ -59,9 +70,8 @@ char	*get_next_line(int fd)
 			return (NULL);
 		buffer[cursor] = '\0';
 		line = ft_strjoin(line, buffer);
-		free(line);
 	}
-	line = ft_read(buffer);
+	line = ft_read(line);
 	ft_sort(buffer);
 	return (line);
 }
@@ -75,7 +85,7 @@ int	main(void)
 	int		i;
 	int		fd;
 
-	fd = open("hello.txt", O_RDONLY);
+	fd = open("text.txt", O_RDONLY);
 	i = 1;
 	while (i < 7)
 	{
