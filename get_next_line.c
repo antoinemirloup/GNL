@@ -3,21 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:55:51 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/10 16:28:59 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/11 16:10:20 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// static char	*ft_read(char *line, char *buffer)
-// {
-	
-	
-// 	return (line);
-// }
+static char	*ft_read(char *buffer)
+{
+	int		i;
+	int		j;
+	char	*line;
+
+	i = 0;
+	while (buffer[i] != '\0' && buffer[i] != '\n')
+		i++;
+	if (!buffer[i])
+		return (NULL);
+	line = malloc((BUFFER_SIZE - i + 1) * sizeof(char));
+	i++;
+	j = 0;
+	while (buffer[i])
+		line[j++] = buffer[i++];
+	return (line);
+}
 
 static void	ft_sort(char *buffer)
 {
@@ -26,7 +38,7 @@ static void	ft_sort(char *buffer)
 	i = 0;
 	while (buffer[i] != '\0' && buffer[i] != '\n')
 		i++;
-	ft_memmove(buffer, &buffer[i + 1], (BUFFER_SIZE - i));
+	ft_memmove(buffer, &buffer[i + 1], (BUFFER_SIZE - i - 1));
 	ft_bzero(&buffer[i + 1], i + 1);
 }
 
@@ -47,7 +59,9 @@ char	*get_next_line(int fd)
 			return (NULL);
 		buffer[cursor] = '\0';
 		line = ft_strjoin(line, buffer);
+		free(line);
 	}
+	line = ft_read(buffer);
 	ft_sort(buffer);
 	return (line);
 }
@@ -70,6 +84,7 @@ int	main(void)
 		free(line);
 		i++;
 	}
+	write (1, "\n", 1);
 	close(fd);
 	return (0);
 }

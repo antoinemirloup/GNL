@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:58:03 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/10 16:57:16 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/11 16:04:47 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,28 @@ size_t	ft_strlen(char *s)
 	return (i);
 }
 
+char	*ft_strdup(char *s)
+{
+	int		i;
+	int		j;
+	char	*d;
+
+	i = 0;
+	j = 0;
+	while (s[i])
+		i++;
+	d = malloc((i + 1) * sizeof(char));
+	if (d == NULL)
+		return (NULL);
+	while (s[j] && j < i)
+	{
+		d[j] = s[j];
+		j++;
+	}
+	d[j] = '\0';
+	return (d);
+}
+
 char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t		i;
@@ -32,8 +54,8 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-	if (!s1 || !s2)
-		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
 	sizes1 = ft_strlen(s1);
 	sizes2 = ft_strlen(s2);
 	s = (char *)malloc((sizes1 + sizes2 + 1) * sizeof(char));
