@@ -6,7 +6,7 @@
 /*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:58:03 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/13 10:23:26 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/13 11:51:36 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	*ft_memmove(char *dest, char *src, size_t n)
 
 char	*ft_strchr(char *s, int c)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (s[i] != (unsigned char)c)

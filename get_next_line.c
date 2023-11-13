@@ -6,11 +6,12 @@
 /*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:55:51 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/13 11:31:57 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/13 15:57:35 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 static char	*ft_read(char *prev_line)
 {
@@ -29,15 +30,14 @@ static char	*ft_read(char *prev_line)
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (prev_line[i] != '\0' && prev_line[i] != '\n')
+	while (prev_line[i] != '\0' && prev_line[i - 1] != '\n')
 	{
 		line[i] = prev_line[i];
 		i++;
 	}
 	if (prev_line[i] == '\n')
 		line[i] = '\n';
-	i = i + 1;
-	line[i] = '\0';
+	line[i + 1] = '\0';
 	free(prev_line);
 	return (line);
 }
@@ -49,8 +49,8 @@ static void	ft_sort(char *buffer)
 	i = 0;
 	while (buffer[i] != '\0' && buffer[i] != '\n')
 		i++;
-	ft_memmove(buffer, &buffer[i + 1], (BUFFER_SIZE - i - 1));
-	ft_bzero(&buffer[i + 1], i + 1);
+	ft_memmove(buffer, buffer + i + 1, (BUFFER_SIZE - i - 1));
+	ft_bzero(&buffer[BUFFER_SIZE - i - 1], i);
 }
 
 char	*get_next_line(int fd)
@@ -72,12 +72,13 @@ char	*get_next_line(int fd)
 		line = ft_strjoin(line, buffer);
 	}
 	line = ft_read(line);
+	printf("Debug avant sort : %s\n", buffer);
 	ft_sort(buffer);
+	printf("Debug : %s\n", buffer);
 	return (line);
 }
 
 #include <fcntl.h>
-#include <stdio.h>
 
 int	main(void)
 {

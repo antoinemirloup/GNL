@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:06:23 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/11 16:38:31 by antoine          ###   ########.fr       */
+/*   Updated: 2023/11/13 13:26:57 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ char	*ft_strjoin(char *s1, char *s2);
 void	*ft_memmove(char *dest, char *src, size_t n);
 char	*ft_strchr(char *s, int c);
 void	ft_bzero(void *s, size_t n);
+size_t	ft_strlen(char *s);
 
 #endif
