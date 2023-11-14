@@ -6,11 +6,11 @@
 /*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:16:54 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/14 15:44:46 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:32:14 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 
 static char	*ft_strchr(char *s, int c)
@@ -75,25 +75,25 @@ char	*get_next_line(int fd)
 	static char	buffer[BUFFER_SIZE + 1][1024];
 	int			cursor;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
 	cursor = 1;
 	line = NULL;
-	line = ft_strjoin(line, buffer);
-	while (cursor != 0 && ft_strchr(buffer, '\n') == NULL)
+	line = ft_strjoin(line, buffer[fd]);
+	while (cursor != 0 && ft_strchr(buffer[fd], '\n') == NULL)
 	{
-		cursor = read(fd, buffer, BUFFER_SIZE);
+		cursor = read(fd, buffer[fd], BUFFER_SIZE);
 		if (cursor == -1)
 		{
-			ft_bzero(buffer, BUFFER_SIZE);
+			ft_bzero(buffer[fd], BUFFER_SIZE);
 			free(line);
 			return (NULL);
 		}
-		buffer[cursor] = '\0';
-		line = ft_strjoin(line, buffer);
+		buffer[cursor][fd] = '\0';
+		line = ft_strjoin(line, buffer[fd]);
 	}
 	line = ft_read(line);
-	ft_sort(buffer);
+	ft_sort(buffer[fd]);
 	return (line);
 }
 
@@ -103,27 +103,29 @@ char	*get_next_line(int fd)
 // {
 // 	char	*line;
 // 	int		i;
-// 	int		fd;
+// 	int		fd1;
+// 	int		fd2;
+// 	int		fd3;
 
-// 	fd = open("text.txt", O_RDONLY);
+// 	fd1 = open("text1.txt", O_RDONLY);
+// 	fd2 = open("text2.txt", O_RDONLY);
+// 	fd3 = open("text3.txt", O_RDONLY);
 // 	i = 1;
-// 	while (i <= 2)
+// 	while (i <= 5)
 // 	{
-// 		line = get_next_line(fd);
+// 		line = get_next_line(fd1);
+// 		printf("%s", line);
+// 		free(line);
+// 		line = get_next_line(fd2);
+// 		printf("%s", line);
+// 		free(line);
+// 		line = get_next_line(fd3);
 // 		printf("%s", line);
 // 		free(line);
 // 		i++;
 // 	}
-// 	close(fd);
-// 	fd = open("text.txt", O_RDONLY);
-// 	i = 1;
-// 	while (i <= 4)
-// 	{
-// 		line = get_next_line(fd);
-// 		printf("%s", line);
-// 		free(line);
-// 		i++;
-// 	}
-// 	close(fd);
+// 	close(fd1);
+// 	close(fd2);
+// 	close(fd3);
 // 	return (0);
 // }
