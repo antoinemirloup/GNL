@@ -6,7 +6,7 @@
 /*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:58:03 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/13 11:51:36 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/14 11:11:26 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[i])
 		s[j++] = s2[i++];
 	s[j] = '\0';
+	free(s1);
 	return (s);
 }
 
