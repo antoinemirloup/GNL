@@ -6,7 +6,7 @@
 /*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:55:51 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/14 11:51:28 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:01:41 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ static char	*ft_read(char *line)
 	}
 	while (line[i] != '\0' && line[i] != '\n')
 		i++;
-	// if (line[i] == '\n')
-	// 	i++;
 	new_line = malloc((i + 2) * sizeof(char));
 	if (!new_line)
 		return (NULL);
@@ -38,8 +36,8 @@ static char	*ft_read(char *line)
 		i++;
 	}
 	if (line[i] == '\n')
-		new_line[i] = '\n';
-	new_line[i + 1] = '\0';
+		new_line[i++] = '\n';
+	new_line[i] = '\0';
 	free(line);
 	return (new_line);
 }
@@ -73,6 +71,7 @@ char	*get_next_line(int fd)
 		cursor = read(fd, buffer, BUFFER_SIZE);
 		if (cursor == -1)
 		{
+			ft_bzero(buffer, BUFFER_SIZE);
 			free(line);
 			return (NULL);
 		}
@@ -84,24 +83,33 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-#include <fcntl.h>
+// #include <fcntl.h>
 
-int	main(void)
-{
-	char	*line;
-	int		i;
-	int		fd;
+// int	main(void)
+// {
+// 	char	*line;
+// 	int		i;
+// 	int		fd;
 
-	fd = open("text.txt", O_RDONLY);
-	i = 1;
-	while (i <= 7)
-	{
-		line = get_next_line(fd);
-		printf("line [%02d]: %s", i, line);
-		free(line);
-		i++;
-	}
-	write (1, "\n", 1);
-	close(fd);
-	return (0);
-}
+// 	fd = open("text.txt", O_RDONLY);
+// 	i = 1;
+// 	while (i <= 2)
+// 	{
+// 		line = get_next_line(fd);
+// 		printf("%s", line);
+// 		free(line);
+// 		i++;
+// 	}
+// 	close(fd);
+// 	fd = open("text.txt", O_RDONLY);
+// 	i = 1;
+// 	while (i <= 4)
+// 	{
+// 		line = get_next_line(fd);
+// 		printf("%s", line);
+// 		free(line);
+// 		i++;
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
