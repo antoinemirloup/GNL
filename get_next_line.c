@@ -6,12 +6,26 @@
 /*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:55:51 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/14 15:01:41 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:12:56 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
+
+static char	*ft_strchr(char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != (unsigned char)c)
+	{
+		if (s[i] == '\0')
+			return ((char *)0);
+		i++;
+	}
+	return ((char *)&s[i]);
+}
 
 static char	*ft_read(char *line)
 {

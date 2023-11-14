@@ -6,7 +6,7 @@
 /*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:58:03 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/14 11:11:26 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:12:31 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,20 +95,6 @@ void	*ft_memmove(char *dest, char *src, size_t n)
 		}
 	}
 	return (dest);
-}
-
-char	*ft_strchr(char *s, int c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != (unsigned char)c)
-	{
-		if (s[i] == '\0')
-			return ((char *)0);
-		i++;
-	}
-	return ((char *)&s[i]);
 }
 
 void	ft_bzero(void *s, size_t n)
