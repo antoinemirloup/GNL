@@ -6,7 +6,7 @@
 /*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:55:51 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/14 15:12:56 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:57:44 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,6 @@ char	*get_next_line(int fd)
 // 	fd = open("text.txt", O_RDONLY);
 // 	i = 1;
 // 	while (i <= 2)
-// 	{
-// 		line = get_next_line(fd);
-// 		printf("%s", line);
-// 		free(line);
-// 		i++;
-// 	}
-// 	close(fd);
-// 	fd = open("text.txt", O_RDONLY);
-// 	i = 1;
-// 	while (i <= 4)
 // 	{
 // 		line = get_next_line(fd);
 // 		printf("%s", line);

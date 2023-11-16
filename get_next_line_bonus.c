@@ -6,7 +6,7 @@
 /*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:16:54 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/14 16:32:14 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:52:12 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	ft_sort(char *buffer)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	buffer[BUFFER_SIZE + 1][1024];
+	static char	buffer[1024][BUFFER_SIZE + 1];
 	int			cursor;
 
 	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
@@ -89,7 +89,7 @@ char	*get_next_line(int fd)
 			free(line);
 			return (NULL);
 		}
-		buffer[cursor][fd] = '\0';
+		buffer[fd][cursor] = '\0';
 		line = ft_strjoin(line, buffer[fd]);
 	}
 	line = ft_read(line);
