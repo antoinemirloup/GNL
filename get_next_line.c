@@ -6,14 +6,13 @@
 /*   By: amirloup <amirloup@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 08:55:51 by amirloup          #+#    #+#             */
-/*   Updated: 2023/11/16 15:57:44 by amirloup         ###   ########.fr       */
+/*   Updated: 2023/11/17 16:10:06 by amirloup         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-static char	*ft_strchr(char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	int	i;
 
@@ -27,22 +26,20 @@ static char	*ft_strchr(char *s, int c)
 	return ((char *)&s[i]);
 }
 
-static char	*ft_read(char *line)
+static char	*ft_line(char *line)
 {
 	int		i;
 	char	*new_line;
 
 	i = 0;
-	if (!line || !line[0])
-	{
-		free(line);
-		return (NULL);
-	}
 	while (line[i] != '\0' && line[i] != '\n')
 		i++;
 	new_line = malloc((i + 2) * sizeof(char));
 	if (!new_line)
+	{
+		free(line);
 		return (NULL);
+	}
 	i = 0;
 	while (line[i] != '\0' && line[i] != '\n')
 	{
@@ -69,18 +66,9 @@ static void	ft_sort(char *buffer)
 	ft_bzero(&buffer[BUFFER_SIZE - i], i);
 }
 
-char	*get_next_line(int fd)
+static char	*ft_read(int fd, char *line, char *buffer, int cursor)
 {
-	char		*line;
-	static char	buffer[BUFFER_SIZE + 1];
-	int			cursor;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	cursor = 1;
-	line = NULL;
-	line = ft_strjoin(line, buffer);
-	while (cursor != 0 && ft_strchr(buffer, '\n') == NULL)
+	while (cursor != 0 && !(ft_strchr(buffer, '\n')))
 	{
 		cursor = read(fd, buffer, BUFFER_SIZE);
 		if (cursor == -1)
@@ -92,28 +80,28 @@ char	*get_next_line(int fd)
 		buffer[cursor] = '\0';
 		line = ft_strjoin(line, buffer);
 	}
-	line = ft_read(line);
-	ft_sort(buffer);
 	return (line);
 }
 
-// #include <fcntl.h>
+char	*get_next_line(int fd)
+{
+	char		*line;
+	int			cursor;
+	static char	buffer[BUFFER_SIZE + 1];
 
-// int	main(void)
-// {
-// 	char	*line;
-// 	int		i;
-// 	int		fd;
-
-// 	fd = open("text.txt", O_RDONLY);
-// 	i = 1;
-// 	while (i <= 2)
-// 	{
-// 		line = get_next_line(fd);
-// 		printf("%s", line);
-// 		free(line);
-// 		i++;
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	cursor = 1;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	line = NULL;
+	if (buffer[0] != '\0')
+		line = ft_strjoin(line, buffer);
+	line = ft_read(fd, line, buffer, cursor);
+	if (!line || line[0] == '\0')
+	{
+		free(line);
+		return (NULL);
+	}
+	line = ft_line(line);
+	ft_sort(buffer);
+	return (line);
+}
